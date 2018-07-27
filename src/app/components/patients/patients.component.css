@@ -1,0 +1,47 @@
+.myBox {
+  padding: 30px;
+  border: 1px solid lightgray;
+  margin: 15px;
+}
+
+.clickableDEP {
+  color: rgb(79, 155, 214);
+  cursor: pointer;
+}
+
+.pass {
+  color: green;
+}
+
+.fail {
+  color: red;
+}
+
+.primary-button {
+  background: #196ecf none repeat scroll 0 0;
+  border-radius: 0px;
+  border: none;
+  color: white;
+}
+
+.primary-button:hover {
+  background: #122377 none repeat scroll 0 0;
+  color: white;
+}
+
+.primary-button-link:hover {
+  color: white;
+  text-decoration: none !important;
+}
+
+#footer-menu .footer-menu-column h3 {
+  font-size: 22px !important;
+  font-family: 'News Cycle' !important;
+  font-weight: bolder !important;
+}
+
+#footer-menu .footer-menu-column .footer-menu-list li, .footer-menu-wrapper #footer-menu .footer-menu-column .footer-menu-list a {
+  padding: 6px 0 0 0 !important;
+  font-size: 18px !important;
+  font-family: 'News Cycle' !important;
+}
