@@ -17,6 +17,7 @@ const httpOptions = {
 
 export class PatientService {
   private serverUrl: string = 'http://10.87.182.125:8080/athena-service/api/clinicalservice';
+  //private serverUrl: string = 'http://localhost:8080/ehr-fhir-demo/api/clinicalservice';
 
   constructor(private httpClient: HttpClient) {
   }

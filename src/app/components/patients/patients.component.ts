@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Patient } from '../../models/patient';
@@ -20,9 +21,10 @@ export class PatientsComponent implements OnInit {
   btnDisable: boolean = true;
   btnDisbaledStyles = {};
   hideTable: boolean = false;
-  practiceId: string = '';
+  practiceId: string = '195900';
   error: string = '';
   isErrorPresent: boolean = false;
+  pipe: any;
 
   patients: Patient[];
 
@@ -30,14 +32,18 @@ export class PatientsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pipe = new DatePipe('en-US');
     this.setBtnDisbaledStyles();
+    this.startDate = new Date();
+    this.startDate.setDate(this.startDate.getDate() - 1);
+    this.endDate = new Date();
   }
 
   getPatients() {
     this.hideTable = false;
     this.spinner.show();
 
-    this.patientListService.resolve(this.practiceId, this.startDate, this.endDate).subscribe((data: ResolvedPatientList) => {
+    this.patientListService.resolve(this.practiceId, this.pipe.transform(this.startDate, 'yyyy-MM-dd'), this.pipe.transform(this.endDate, 'yyyy-MM-dd')).subscribe((data: ResolvedPatientList) => {
       if (data.error == null) {
         console.log("In Patients Component, in Subscribe :" + data.patients);
         this.patients = data.patients;

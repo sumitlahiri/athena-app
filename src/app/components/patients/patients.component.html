@@ -13,7 +13,7 @@
         <label class="col-form-label"><strong>Practice ID :</strong></label>
       </div>
       <div class="col-sm-2">
-        <input type="text" placeholder="Practice ID" class="form-control" id="practiceId" value="195900" [(ngModel)]="practiceId">
+        <input type="text" placeholder="195900" class="form-control" id="practiceId" value="195900" [(ngModel)]="practiceId">
       </div>
     </div>
 
@@ -22,14 +22,14 @@
         <label class="col-form-label"><strong>From</strong></label>
       </div>
       <div class="col-sm-2">
-        <input type="date" name="startDate" [(ngModel)]="startDate" class="form-control" id="startDate">
+        <input type="date" name="startDate" [ngModel]="startDate  | date:'yyyy-MM-dd'" value="startDate" class="form-control" id="startDate" (ngModelChange)="startDate = $event">
         <!--<h6>Start Date: {{startDate}}</h6>-->
       </div>
       <div class="col-sm-2">
         <label class="col-form-label"><strong>Until</strong></label>
       </div>
       <div class="col-sm-2">
-        <input type="date" name="endDate" [(ngModel)]="endDate" class="form-control" id="endDate">
+        <input type="date" name="endDate" [ngModel]="endDate | date:'yyyy-MM-dd'" class="form-control" id="endDate" (ngModelChange)="endDate = $event">
         <!--<h6>End Date: {{endDate}}</h6>-->
       </div>
     </div>
@@ -67,6 +67,7 @@
             <th><strong>Date of Birth</strong></th>
             <th><strong>MemberId</strong></th>
             <th><strong>DepartmentId</strong></th>
+            <th><strong>Visit Date</strong></th>
             <th><strong>Insurance Name</strong></th>
             <th>&nbsp;</th>
           </tr>
@@ -83,6 +84,8 @@
           <td>
             <h6><small>{{patient.departmentId}}</small></h6></td>
           <td>
+            <h6><small>{{(patient.visitDate != 'xxxxxxxx') ? (patient.visitDate | date : 'mediumDate') : 'xxxxxxxx'}}</small></h6></td>
+          <td>
             <h6><small>{{patient.insuranceName}}</small></h6></td>
           <td>
             <a href='http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/{{patient.departmentId}}/getCCDA/{{patient.memberId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
@@ -93,6 +96,13 @@
       </table>
     </div>
 
+    <div id="noPatients" class="container-bg" *ngIf="patients?.length == 0">
+      <div class="form-group row">
+        <div class="col-sm-8 alert alert-warning" role="alert">
+          <h4><i>No patients found for the selection criterion !!</i></h4>
+        </div>
+      </div>
+    </div>
     <!--<ng-template #noPatients>
 /{{}}      <h4>No patients found !!</h4>
     </ng-template> -->
