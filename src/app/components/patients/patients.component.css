@@ -17,6 +17,10 @@
   color: red;
 }
 
+.table-hover > tbody > tr:hover {
+  background-color: lightblue;
+}
+
 .primary-button {
   background: #196ecf none repeat scroll 0 0;
   border-radius: 0px;

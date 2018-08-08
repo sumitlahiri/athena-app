@@ -6,5 +6,6 @@ export interface Patient {
   insuranceName: string,
   departmentId: string,
   visitDate: string,
+  encounterId: any,
   isActive?: boolean
 }

@@ -1,16 +1,38 @@
+<ngx-spinner></ngx-spinner>
 <div style="padding-right: 0px;">
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: white; box-shadow: 1px 1px 5px #888;">
     <div class="col-md-10 col-sm-10">
       <img src="https://www.uhc.com/content/dam/uhcdotcom/en/responsive/header-logo.png">
     </div>
   </nav>
-
+  <div>
+    &nbsp;
+  </div>
   <div class="card card-body mb-3">
-    <h3>Schedule Based CCDA Download</h3>
+    <!--<h3>Schedule Based CCDA Download</h3>-->
+
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label class="col-form-label"><strong>Practice Group</strong></label> &nbsp;&nbsp;&nbsp;&nbsp;
+        <label class="col-form-label">{{practiceGroup}}</label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-4">
+        <label class="col-form-label"><strong>HealthSystem Name</strong></label> &nbsp;&nbsp;&nbsp;&nbsp;
+        <label class="col-form-label">{{healthSystemName}}</label>
+      </div>
+    </div>
+
+    <!--<div class="form-group row">
+      <div class="col-sm-12">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+      </div>
+    </div>-->
 
     <div class="form-group row">
       <div class="col-sm-2">
-        <label class="col-form-label"><strong>Practice ID :</strong></label>
+        <label class="col-form-label"><strong>Practice ID</strong></label>
       </div>
       <div class="col-sm-2">
         <input type="text" placeholder="195900" class="form-control" id="practiceId" value="195900" [(ngModel)]="practiceId">
@@ -35,12 +57,13 @@
     </div>
 
     <div class="form-group row">
+      <div class="col-sm-2">&nbsp;</div>
       <div class="col-sm-3">&nbsp;</div>
       <div class="col-sm-3">&nbsp;</div>
-      <div class="col-sm-3"></div>
-      <div class="col-sm-3">
+      <div class="col-sm-4">
         <button type="button" class="btn primary-button" (click)="getPatients()">Get Scheduled Patients</button>&nbsp;
-        <button type="button" class="btn primary-button" (click)="resetPatients()">Reset Search</button>
+        <button [disabled]="hideTable" type="button" class="btn primary-button" (click)="resetPatients()">Reset Search</button>&nbsp;
+        <button (click)="goBack()" type="button" class="btn primary-button" (click)="goBack()">back</button>
       </div>
     </div>
 
@@ -59,42 +82,58 @@
         </div>
       </div>
 
-      <table class="table table-striped table-striped table-bordered">
+      <table class="table table-hover table-striped table-bordered">
         <thead>
           <tr style="background-color: #196ECF; color:white;">
             <th><strong>First Name</strong></th>
             <th><strong>Last Name</strong></th>
             <th><strong>Date of Birth</strong></th>
             <th><strong>MemberId</strong></th>
-            <th><strong>DepartmentId</strong></th>
+            <!--<th><strong>DepartmentId</strong></th>-->
             <th><strong>Visit Date</strong></th>
             <th><strong>Insurance Name</strong></th>
             <th>&nbsp;</th>
           </tr>
         </thead>
         <tbody *ngFor="let patient of patients">
-          <td>
-            <h6><small>{{patient.firstName}}</small></h6></td>
-          <td>
-            <h6><small>{{patient.lastName}}</small></h6></td>
-          <td>
-            <h6><small>{{(patient.dob != '') ? (patient.dob | date : 'mediumDate') : 'xxxxxxxx'}}</small></h6></td>
-          <td>
-            <h6><small>{{patient.memberId}}</small></h6></td>
-          <td>
-            <h6><small>{{patient.departmentId}}</small></h6></td>
-          <td>
-            <h6><small>{{(patient.visitDate != 'xxxxxxxx') ? (patient.visitDate | date : 'mediumDate') : 'xxxxxxxx'}}</small></h6></td>
-          <td>
-            <h6><small>{{patient.insuranceName}}</small></h6></td>
-          <td>
-            <a href='http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/{{patient.departmentId}}/getCCDA/{{patient.memberId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
+          <tr>
+            <td>
+              <h6><small>{{patient.firstName}}</small></h6></td>
+            <td>
+              <h6><small>{{patient.lastName}}</small></h6></td>
+            <td>
+              <h6><small>{{(patient.dob != '') ? (patient.dob | date : 'mediumDate') : 'xxxxxxxx'}}</small></h6></td>
+            <td>
+              <h6><small>{{patient.memberId}}</small></h6></td>
+            <!--<td>
+            <h6><small>{{patient.departmentId}}</small></h6></td>-->
+            <td>
+              <h6><small>{{(patient.visitDate != 'xxxxxxxx') ? (patient.visitDate | date : 'medium') : 'xxxxxxxx'}}</small></h6></td>
+            <td>
+              <h6><small>{{patient.insuranceName}}</small></h6></td>
+            <td>
+              <!--<a href='http://localhost:8080/ehr-fhir-demo/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
+              <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn primary-button" [class.btn-secondary]="patient.insuranceName != 'UHG'">Get CCDA</button>
+            </a>-->
+              <a href='http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
               <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn primary-button" [class.btn-secondary]="patient.insuranceName != 'UHG'">Get CCDA</button>
             </a>
-          </td>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <!--<div class="form-group row">
+      <div class="col-sm-3">&nbsp;</div>
+      <div class="col-sm-3">&nbsp;</div>
+      <div class="col-sm-3"></div>
+      <div class="col-sm-11">
+        <div class="float-right">
+          <button (click)="goBack()" type="button" class="btn primary-button" (click)="goBack()">back</button>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+    </div>-->
 
     <div id="noPatients" class="container-bg" *ngIf="patients?.length == 0">
       <div class="form-group row">

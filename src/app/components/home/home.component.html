@@ -1,0 +1,50 @@
+<!--<h1> Welcome</h1>
+<p>
+    Welcome to Patient Scheduling !!
+</p>
+
+<button class="btn btn-secondary" type="button" name="button" routerLink="/schedule">Schedule</button>-->
+
+<div style="padding-right: 0px;">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: white; box-shadow: 1px 1px 5px #888;">
+    <div class="col-md-10 col-sm-10">
+      <img src="https://www.uhc.com/content/dam/uhcdotcom/en/responsive/header-logo.png">
+    </div>
+  </nav>
+  <div>
+    &nbsp;
+  </div>
+
+  <div class="card card-body mb-3">
+    <h3>Schedule Based CCDA Download</h3>
+    <div>
+      &nbsp;
+    </div>
+    <div id="healthSystemList" class="container-bg">
+      <table class="table table-hover table-striped table-bordered">
+        <thead>
+          <tr style="background-color: #196ECF; color:white;">
+            <th><strong>Practice Group</strong></th>
+            <th><strong>Location</strong></th>
+            <th><strong>HealthSystem Name</strong></th>
+            <th><strong>PracticeId</strong></th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let practiceDetail of practiceDetails">
+          <tr>
+            <td>
+              <h6><small>{{practiceDetail.practiceGroup}}</small></h6></td>
+            <td>
+              <h6><small>{{practiceDetail.location}}</small></h6></td>
+            <td>
+              <h6><small>{{practiceDetail.healthSystemName}}</small></h6></td>
+            <td>
+              <h6><small>{{practiceDetail.practiceId}}</small></h6></td>
+            <td><button [disabled]="!practiceDetail.isActive" (click)="onSelect(practiceDetail)" class="btn primary-button" type="button" name="button" routerLink="/schedule">Go to Schedule</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

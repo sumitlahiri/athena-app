@@ -12,6 +12,8 @@ import { CcdaPostsComponent } from './components/ccda-posts/ccda-posts.component
 
 import { PatientService } from './services/patient.service';
 import { PatientListResolverService } from './services/patient-list-resolver.service';
+import { AppRoutingModule } from './/app-routing.module';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -19,14 +21,16 @@ import { PatientListResolverService } from './services/patient-list-resolver.ser
     AppComponent,
     PatientComponent,
     PatientsComponent,
-    CcdaPostsComponent
+    CcdaPostsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    AppRoutingModule
   ],
   providers: [PatientService, PatientListResolverService],
   bootstrap: [AppComponent]
