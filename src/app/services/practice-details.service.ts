@@ -43,4 +43,12 @@ export class PracticeDetailsService {
   getPopulatePracticeDetails() {
     return this.practiceDetails;
   }
+
+  getPracticeDetails(practiceId: string): PracticeDetails {
+    for (var ind = 0; ind < this.practiceDetails.length; ind++) {
+      if (this.practiceDetails[ind].practiceId == practiceId) {
+        return this.practiceDetails[ind];
+      }
+    }
+  }
 }

@@ -63,7 +63,7 @@
       <div class="col-sm-4">
         <button type="button" class="btn primary-button" (click)="getPatients()">Get Scheduled Patients</button>&nbsp;
         <button [disabled]="hideTable" type="button" class="btn primary-button" (click)="resetPatients()">Reset Search</button>&nbsp;
-        <button (click)="goBack()" type="button" class="btn primary-button" (click)="goBack()">back</button>
+        <button (click)="goBack()" type="button" class="btn primary-button" (click)="goBack()">Back</button>
       </div>
     </div>
 
@@ -115,9 +115,10 @@
               <!--<a href='http://localhost:8080/ehr-fhir-demo/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
               <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn primary-button" [class.btn-secondary]="patient.insuranceName != 'UHG'">Get CCDA</button>
             </a>-->
-              <a href='http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
-              <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn primary-button" [class.btn-secondary]="patient.insuranceName != 'UHG'">Get CCDA</button>
-            </a>
+              <!--<a href='http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}' class="primary-button-link" target="_blank">
+              <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn btn-primary" [class.btn-secondary]="patient.insuranceName != 'UHG'">Get CCDA</button>
+            </a>-->
+              <button [disabled]="patient.insuranceName != 'UHG'" type="button" class="btn primary-button" [class.btn-secondary]="patient.insuranceName != 'UHG'" (click)="getCCDA(patient.memberId, patient.encounterId)">Get CCDA</button>
             </td>
           </tr>
         </tbody>

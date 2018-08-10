@@ -11,6 +11,12 @@ const httpOptions = {
   })
 };
 
+const httpOptionsCCDA = {
+  headers: new HttpHeaders({
+    'Content-Type': 'text/xml'
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,9 +36,23 @@ export class PatientService {
     httpOptions.headers.append("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
 
     const url = `${this.serverUrl}/${practiceId}/getScheduledPatients/${startDate}/${endDate}`;
-    console.log("XXX URL GET " + url)
+    console.log("getPatient URL " + url)
 
     return this.httpClient.get<Patient[]>(url, httpOptions).pipe(catchError(this.handleError));
+  }
+
+  getCCDAForPatient(practiceId: string, memberId: string, encounterId: string, startDate: string, endDate: string): Observable<string> {
+    //http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}
+
+    httpOptionsCCDA.headers.append('Access-Control-Allow-Origin', '*');
+    httpOptionsCCDA.headers.append('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    httpOptionsCCDA.headers.append('Access-Control-Allow-Credentials', 'true');
+    httpOptionsCCDA.headers.append("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+
+    const url = `${this.serverUrl}/${practiceId}/getCCDA/${memberId}/${encounterId}/${startDate}/${endDate}`;
+    console.log("getCCDAForPatient URL " + url)
+
+    return this.httpClient.get<string>(url, httpOptionsCCDA).pipe(map((data) => JSON.stringify(data)), catchError(this.handleError));
   }
 
   private handleError(errorResponse: HttpErrorResponse) {

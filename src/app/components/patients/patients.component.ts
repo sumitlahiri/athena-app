@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Patient } from '../../models/patient';
 import { ResolvedPatientList } from '../../models/resolved-patientlist.model';
+import { ResolvedCcda } from '../../models/resolved-ccda.model';
 
 import { PatientListResolverService } from '../../services/patient-list-resolver.service';
 import { PracticeDetailsService } from '../../services/practice-details.service';
@@ -31,12 +32,12 @@ export class PatientsComponent implements OnInit {
   healthSystemName: string = '';
   practiceGroup: string = '';
   color: string = 'white';
+  ccda: string = '';
 
   patients: Patient[];
-  practiceDetails: PracticeDetails[];
+  practiceDetail: PracticeDetails;
 
   constructor(private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private patientListService: PatientListResolverService, private practiceDetailsService: PracticeDetailsService) {
-    this.practiceDetails = this.practiceDetailsService.getPopulatePracticeDetails();
   }
 
   ngOnInit() {
@@ -46,17 +47,12 @@ export class PatientsComponent implements OnInit {
     this.startDate.setDate(this.startDate.getDate() - 1);
     this.endDate = new Date();
     this.practiceId = this.route.snapshot.paramMap.get('id');
-    this.getPracticeDetails(this.practiceId);
+    this.practiceDetail = this.practiceDetailsService.getPracticeDetails(this.practiceId);
+    this.healthSystemName = this.practiceDetail.healthSystemName;
+    this.practiceGroup = this.practiceDetail.practiceGroup;
   }
 
-  getPracticeDetails(practiceId: string) {
-    for (var ind = 0; ind < this.practiceDetails.length; ind++) {
-      if (this.practiceDetails[ind].practiceId == practiceId) {
-        this.healthSystemName = this.practiceDetails[ind].healthSystemName;
-        this.practiceGroup = this.practiceDetails[ind].practiceGroup;
-      }
-    }
-  }
+
 
   getPatients() {
     this.spinner.show();
@@ -70,6 +66,29 @@ export class PatientsComponent implements OnInit {
         this.isErrorPresent = false;
         this.spinner.hide();
         if (this.patients.length > 0) {
+          this.hideTable = false;
+        }
+      }
+      else {
+        this.error = data.error;
+        this.isErrorPresent = true;
+        this.spinner.hide();
+      }
+    })
+
+  }
+
+  getCCDA(memberId: string, encounterId: string) {
+    //http://10.87.182.125:8080/athena-service/api/clinicalservice/{{practiceId}}/getCCDA/{{patient.memberId}}/{{patient.encounterId}}/{{startDate}}/{{endDate}}
+    this.spinner.show();
+
+    this.patientListService.resolveGetCCDA(this.practiceId, memberId, encounterId, this.startDate, this.endDate).subscribe((data: ResolvedCcda) => {
+      if (data.error == null) {
+        console.log("In Patients Component, in Subscribe :" + data.ccda);
+        this.ccda = data.ccda;
+        this.isErrorPresent = false;
+        this.spinner.hide();
+        if (this.ccda == '') {
           this.hideTable = false;
         }
       }
